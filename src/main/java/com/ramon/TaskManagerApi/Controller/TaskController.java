@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -21,8 +22,19 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getTaskById() {
-        return ResponseEntity.status(200).body("Ok");
+    public ResponseEntity<?> getTaskById(@PathVariable int id) {
+
+        if (id <= 0) {
+            return ResponseEntity.status(400).body("Invalid ID");
+        }
+
+        Optional<Tasks> task = taskService.getTaskById(id);
+
+        if (task.isEmpty()) {
+            return ResponseEntity.status(404).body("Task not found");
+        } else {
+            return ResponseEntity.status(200).body(task);
+        }
     }
 
     @PostMapping
