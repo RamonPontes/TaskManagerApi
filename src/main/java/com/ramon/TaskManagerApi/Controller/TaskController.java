@@ -1,6 +1,5 @@
 package com.ramon.TaskManagerApi.Controller;
 
-import com.ramon.TaskManagerApi.Model.Task;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
