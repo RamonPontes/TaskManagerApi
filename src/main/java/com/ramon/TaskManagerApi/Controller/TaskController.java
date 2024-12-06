@@ -58,8 +58,14 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteTask() {
-        return ResponseEntity.status(200).body("Ok");
+    public ResponseEntity<String> deleteTask(@PathVariable int id) {
+        if (id <= 0) { return ResponseEntity.status(400).body("Invalid ID"); }
+
+        if (taskService.getTaskById(id).isEmpty()) { return ResponseEntity.status(404).body("Task not found"); }
+
+        taskService.deleteTask(id);
+
+        return ResponseEntity.status(200).body("Task deleted");
     }
 
 }
