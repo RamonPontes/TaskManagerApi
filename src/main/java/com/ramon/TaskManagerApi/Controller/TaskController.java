@@ -38,8 +38,13 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createdTask() {
-        return ResponseEntity.status(200).body("Ok");
+    public ResponseEntity<?> createdTask(@RequestBody Tasks task) {
+
+        if (task.isAnyFieldNull()) { return ResponseEntity.status(400).body("All fields are required"); }
+
+        Tasks newTask = taskService.createdTask(task);
+
+        return ResponseEntity.status(200).body(newTask);
     }
 
     @PutMapping("/{id}")

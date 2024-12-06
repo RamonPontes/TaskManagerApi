@@ -1,5 +1,6 @@
 package com.ramon.TaskManagerApi.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -70,4 +71,8 @@ public class Tasks {
         this.createdAt = createdAt;
     }
 
+    @JsonIgnore
+    public boolean isAnyFieldNull() {
+        return getTitle() == null || getDescription() == null || getCreatedBy() == null || getStatus() == null;
+    }
 }

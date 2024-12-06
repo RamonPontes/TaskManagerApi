@@ -21,4 +21,8 @@ public class TaskService {
     public Optional<Tasks> getTaskById(int id) {
         return taskRepository.findById(id);
     }
+
+    public Tasks createdTask(Tasks task) {
+        return taskRepository.save(task);
+    }
 }
