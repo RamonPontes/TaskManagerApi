@@ -25,4 +25,18 @@ public class TaskService {
     public Tasks createdTask(Tasks task) {
         return taskRepository.save(task);
     }
+
+    public Tasks updateTask(Tasks taskDetails, int id) {
+        Optional<Tasks> optionalTask  = taskRepository.findById(id);
+
+        Tasks task = optionalTask.orElseThrow(() -> new RuntimeException("Task not found"));
+
+        task.setDescription(taskDetails.getDescription());
+        task.setTitle(taskDetails.getTitle());
+        task.setStatus(taskDetails.getStatus());
+        task.setCreatedBy(taskDetails.getCreatedBy());
+
+
+        return taskRepository.save(task);
+    }
 }

@@ -24,9 +24,7 @@ public class TaskController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getTaskById(@PathVariable int id) {
 
-        if (id <= 0) {
-            return ResponseEntity.status(400).body("Invalid ID");
-        }
+        if (id <= 0) { return ResponseEntity.status(400).body("Invalid ID"); }
 
         Optional<Tasks> task = taskService.getTaskById(id);
 
@@ -48,8 +46,15 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> editTask() {
-        return ResponseEntity.status(200).body("Ok");
+    public ResponseEntity<?> editTask(@PathVariable int id, @RequestBody Tasks task) {
+
+        if (id <= 0) { return ResponseEntity.status(400).body("Invalid ID"); }
+
+        if (task.isAnyFieldNull()) { return ResponseEntity.status(400).body("All fields are required"); }
+
+        if (taskService.getTaskById(id).isEmpty()) { return ResponseEntity.status(404).body("Task not found"); }
+
+        return ResponseEntity.status(200).body(taskService.updateTask(task, id));
     }
 
     @DeleteMapping("/{id}")
