@@ -17,7 +17,12 @@ public class TaskController {
     private TaskService taskService;
 
     @GetMapping
-    public ResponseEntity<List<Tasks>> getAllTasks() {
+    public ResponseEntity<List<Tasks>> getAllTasks(@RequestParam(required = false) String status) {
+
+        if (status != null) {
+            return ResponseEntity.status(200).body(taskService.getTasksByStatus(status));
+        }
+
         return ResponseEntity.status(200).body(taskService.getAllTasks());
     }
 

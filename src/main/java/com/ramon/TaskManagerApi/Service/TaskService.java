@@ -40,6 +40,10 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
+    public List<Tasks> getTasksByStatus(String status) {
+        return taskRepository.getTasksByStatus(status);
+    }
+
     public void deleteTask(int id) {
         taskRepository.deleteById(id);
     }
